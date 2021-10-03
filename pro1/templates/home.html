@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{% block content %}
+
+    <h1>HELLO WORLD :)</h1>
+    <h2>hi {{name}}</h2>
+
+<br><br>
+<form action="login" method="POST">
+{% csrf_token %}
+
+User Name :&nbsp; <input type="text" name="user"><br>
+Password :&nbsp; <input type="password" name="password"><br>
+<input type="submit" value='log in'>
+
+</form>
+
+
+
+
+
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+</head>
+<body>
+<div id="total" >
+<div id="banner" style="background-image: url({% static 'img/blood2.jpg' %});">
+    <h1>BLOOD BANK</h1>
+</div>
+
+
+<form action="adding" method="POST">
+    {% csrf_token %}
+
+  <div class="container">
+    <h2>ADD MEMBER</h2>
+    <p>Please fill in this form to add a member.</p>
+    <hr>
+
+    <label for="name"><b>User Name</b></label>
+    <input type="text" placeholder="Enter Name" name="name" id="name" required>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+    <label for="phone"><b>Phone</b></label>
+    <input type="text" placeholder="Enter phone number" name="phone" id="phone" required>
+
+    <label for="bgroup"><b>Blood group</b></label>
+    <input type="text" placeholder="Enter blood group" name="bgroup" id="bgroup" required>
+    <hr>
+    
+
+    <button type="submit" class="registerbtn">ADD</button>
+  </div>
+  
+  
+
+</form>
+</div>
+</body>
+</html>
