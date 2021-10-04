@@ -11,8 +11,7 @@ def signup(request):
     
         bgroup=request.POST['bgroup']
         phone=request.POST['phone']
-
-        username=request.POST['name']
+        username=request.POST['username']
         email=request.POST['email']
         password=request.POST['password']
         password1=request.POST['password1']

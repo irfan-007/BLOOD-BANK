@@ -28,17 +28,22 @@
     <p>Please fill in this form to create an account.</p>
     <hr>
 
-    <label for="name"><b>User Name</b></label>
-    <input type="text" placeholder="Enter Name" name="name" id="name" required>
+    <label for="username"><b>User Name</b></label>
+    <input type="text" placeholder="Enter Name" name="username" id="username" required>
+    <span id="namespan" style="color: red; display:none;">*user name is already taken</span>
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter password" name="password" id="password" required>
 
     <label for="password1"><b>Confirm Password</b></label>
     <input type="password" placeholder="Confirm Password" name="password1" id="password1" required>
+    <span id="passwordspan" style="color: red; display:none;">*password not matching</span>
+
 
     <label for="email"><b>Email</b></label>
     <input type="email" placeholder="Enter Email" name="email" id="email" required><br><br>
+    <span id="emailspan" style="color: red; display:none;">*email is already taken</span>
+
 
     <label for="phone"><b>Phone</b></label>
     <input type="text" placeholder="Enter phone number" name="phone" id="phone" required>
@@ -49,9 +54,11 @@
     
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-    <button type="submit" class="registerbtn">Register</button>
+    <button type="button" class="registerbtn" id="reg_butt">Register</button>
   </div>
-  
+
+  <div id ='alerting' style="display: none;color:red"></div>
+
   <div class="container signin">
     <p>Already have an account? <a href="/login/">Log-in</a>.</p>
   </div>
@@ -59,6 +66,46 @@
 </form>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+  $('#reg_butt').click(function(e){
+
+    e.preventDefault();
+    var data={
+        username:$('#username').val(),
+        password:$('#password').val(),
+        password1:$('#password1').val(),
+        email:$('#email').val(),
+        phone:$('#password1').val(),
+        bgroup:$('#password1').val(),
+        
+        'csrfmiddlewaretoken': {{csrf_token}}
+        
+         }
+         
+    if(username=='')
+    $('#alerting').html('username can not be empty!')
+    else if(password=='')
+    $('#alerting').html('password can not be empty!')
+    $.ajax({
+    
+    type:'POST',
+    url: '/signup/' ,
+    dataType:'json',      
+    success:function(data){ 
+      if(data.success){
+      window.location.replace('/login/')
+      alert("user registered successfuly") 
+    }
+    
+    }     
+         
+    })
+    
+    })
+
+</script>
 
 
 </body>
