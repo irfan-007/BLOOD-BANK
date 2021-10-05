@@ -41,7 +41,7 @@
 
 
     <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="Enter Email" name="email" id="email" required><br><br>
+    <input type="email" placeholder="Enter Email" name="email" id="email" required>
     <span id="emailspan" style="color: red;"></span><br>
 
 
@@ -69,10 +69,15 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-$('#reg_butt').click(function(){
+$('#reg_butt').mouseenter(function(){
   $(this).css({'background':'blue'})
-
 })
+$('#reg_butt').mouseleave(function(){
+  $(this).css({'background':'green'})
+})
+
+
+
   $('#reg_butt').click(function(){
 
     

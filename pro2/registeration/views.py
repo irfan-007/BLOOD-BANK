@@ -21,14 +21,12 @@ def signup(request):
 
         if password==password1:
             if User.objects.filter(username=username).exists():
-                messages.info(request,'username taken')
                 return JsonResponse(
                     {'success':False,'nameerror':True},
                     safe=False
                 )
                  
             elif User.objects.filter(email=email).exists():
-                messages.info(request,'email taken')
                 return JsonResponse(
                     {'success':False , 'emailerror':True},
                     safe=False
@@ -46,7 +44,6 @@ def signup(request):
 
         else:
             print("password not matching")
-            messages.info(request,'password not matching')
             return JsonResponse(
                     {'success':False,'passerror':True},
                     safe=False
