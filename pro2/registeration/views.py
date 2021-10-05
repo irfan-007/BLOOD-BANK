@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.messages.api import success
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -20,23 +22,35 @@ def signup(request):
         if password==password1:
             if User.objects.filter(username=username).exists():
                 messages.info(request,'username taken')
-                return redirect(signup)
-
+                return JsonResponse(
+                    {'success':False,'nameerror':True},
+                    safe=False
+                )
+                 
             elif User.objects.filter(email=email).exists():
                 messages.info(request,'email taken')
-                return redirect(signup)
+                return JsonResponse(
+                    {'success':False , 'emailerror':True},
+                    safe=False
+                )
 
             else:
                 user=User.objects.create_user(username=username,password=password,email=email)
                 table_bgroup.objects.create(bgroup=bgroup,phone=phone,user=user)
                 
                 print('user created')
-                return redirect(login)
+                return JsonResponse(
+                    {'success':True},
+                    safe=False
+                )
 
         else:
             print("password not matching")
             messages.info(request,'password not matching')
-            return redirect(signup)
+            return JsonResponse(
+                    {'success':False,'passerror':True},
+                    safe=False
+                )
     else:
         return render(request,'signup.html')
 

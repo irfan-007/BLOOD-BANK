@@ -30,19 +30,19 @@
 
     <label for="username"><b>User Name</b></label>
     <input type="text" placeholder="Enter Name" name="username" id="username" required>
-    <span id="namespan" style="color: red; display:none;">*user name is already taken</span>
+    <span id="namespan" style="color: red;"></span><br>
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter password" name="password" id="password" required>
 
     <label for="password1"><b>Confirm Password</b></label>
     <input type="password" placeholder="Confirm Password" name="password1" id="password1" required>
-    <span id="passwordspan" style="color: red; display:none;">*password not matching</span>
+    <span id="passwordspan" style="color: red;"></span><br>
 
 
     <label for="email"><b>Email</b></label>
     <input type="email" placeholder="Enter Email" name="email" id="email" required><br><br>
-    <span id="emailspan" style="color: red; display:none;">*email is already taken</span>
+    <span id="emailspan" style="color: red;"></span><br>
 
 
     <label for="phone"><b>Phone</b></label>
@@ -53,11 +53,12 @@
     <hr>
     
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+    
+    <div id ='alerting' style="color:rgb(245, 170, 10)"></div>
 
     <button type="button" class="registerbtn" id="reg_butt">Register</button>
   </div>
 
-  <div id ='alerting' style="display: none;color:red"></div>
 
   <div class="container signin">
     <p>Already have an account? <a href="/login/">Log-in</a>.</p>
@@ -68,41 +69,62 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+$('#reg_butt').click(function(){
+  $(this).css({'background':'blue'})
 
-  $('#reg_butt').click(function(e){
+})
+  $('#reg_butt').click(function(){
 
-    e.preventDefault();
+    
     var data={
+      'csrfmiddlewaretoken': '{{csrf_token}}',
+
         username:$('#username').val(),
         password:$('#password').val(),
         password1:$('#password1').val(),
         email:$('#email').val(),
         phone:$('#password1').val(),
-        bgroup:$('#password1').val(),
-        
-        'csrfmiddlewaretoken': {{csrf_token}}
-        
+        bgroup:$('#password1').val()
          }
          
-    if(username=='')
+    if(data.username==''){
     $('#alerting').html('username can not be empty!')
-    else if(password=='')
+     }
+    else if(data.password==''){
     $('#alerting').html('password can not be empty!')
+    }
+    else{
     $.ajax({
-    
-    type:'POST',
     url: '/signup/' ,
+    method:'POST',
+    data:data,
     dataType:'json',      
     success:function(data){ 
       if(data.success){
-      window.location.replace('/login/')
       alert("user registered successfuly") 
+      window.location.replace('/login/')
+    }
+    else{
+
+      if(data.nameerror)
+      {$('#namespan').html('*user name is already taken')}
+      else{$('#namespan').hide()}
+
+      if(data.passerror)
+      {$('#passwordspan').html('*password not matching')}
+      else{$('#passwordspan').hide()}
+
+      if(data.emailerror)
+      {$('#emailspan').html('*email is already taken ')}
+      else{$('#emailspan').hide()}
+     
+      
     }
     
     }     
          
     })
-    
+  }
     })
 
 </script>
