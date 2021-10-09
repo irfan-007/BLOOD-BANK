@@ -8,7 +8,9 @@ from .models import *
 
 # Create your views here.
 
+
 def signup(request):
+
     if request.method=='POST':
     
         bgroup=request.POST['bgroup']
@@ -52,15 +54,23 @@ def signup(request):
         return render(request,'signup.html')
 
 
+
+
 def login(request):
+
+
+    if request.session.has_key('username'):
+        return redirect(display)
     
     if request.method=='POST':
+        
         username=request.POST['username']
         password=request.POST['password']
 
         user=auth.authenticate(username=username,password=password)
 
         if user is not None:
+            request.session['username']=username
             auth.login(request,user)
             return redirect(display)
         else:
@@ -72,9 +82,12 @@ def login(request):
 
 
 def logout(request):
-    auth.logout(request)  
+    request.session.flush()
+    #auth.logout(request)  
     return redirect('/')
     
+
+
 def display(request):
     
     users=User.objects.all()
